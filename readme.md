@@ -2,7 +2,7 @@
 
 <h3>FinalProject Management System</h3>
 
-<p>This application is written for <bold>managing</bold> the final project of university students.</p>
+<p>This application is written for <b>managing</b> the final project of university students.</p>
 <p>You can also use the following software to manage your college students' final project.</p>
 
 <i>Good Luck :)</i>
