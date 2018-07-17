@@ -20,6 +20,8 @@ class CreateStudentTable extends Migration
             $table->integer('stu_number');
             $table->integer('master_id');
             $table->string('deadline')->nullable();
+            $table->string('defence_time')->nullable();
+            $table->string('class_number')->nullable();
             $table->integer('refree_id')->nullable();
             $table->string('defence_situation')->nullable();
             $table->string('complementary')->nullable();
