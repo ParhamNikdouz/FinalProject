@@ -145,4 +145,67 @@ class UserController extends Controller
                 session()->flash('removed', 'This master was successfully removed.');
                 return redirect('/SeeMaster');
         }
+        public function SeeRefree(){
+            $masters = User::join('degrees', 'users.degree_id', '=', 'degrees.id')
+                    ->select('users.id', 'users.name', 'users.email', 'degrees.title')
+                    ->get();
+                    return view('SeeRefree', compact('masters'));
+        }
+        public function SeeStuRefree(User $user){
+            session()->put('key', $user->id);
+            $terms = Term::all();
+            $students = Student::where('refree_id', '=', $user->id)
+                ->leftjoin('terms', 'students.term_id', '=', 'terms.id')
+                ->leftjoin('users', 'students.refree_id', '=', 'users.id')
+                ->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_time', 'students.class_number', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')
+                ->get();
+                    return view('SeeStuRefree', compact('students', 'terms'));
+        }
+        public function RefreeTermFilter(Term $term){
+
+            $this->validate(request(), [
+                'term_id' => 'Numeric'
+            ]);
+
+            $term = request('term_id');
+
+            $terms = Term::all();
+            $id = session()->get('key');
+            $matchThese = ['refree_id' => $id, 'term_id' => $term];
+            $students = Student::where($matchThese)
+                ->leftjoin('terms', 'students.term_id', '=', 'terms.id')
+                ->leftjoin('users', 'students.refree_id', '=', 'users.id')
+                ->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_time', 'students.class_number', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')
+                ->get();
+            return view('SeeStuRefree', compact('students', 'terms', 'term'));
+        }
+        public function ReportStuRefree(){
+                $terms = Term::all();
+                $id = session()->get('key');
+                $students = Student::where('refree_id', '=', $id)
+                    ->leftjoin('terms', 'students.term_id', '=', 'terms.id')
+                    ->join('users as u1', 'students.refree_id', '=', 'u1.id')
+                    ->join('users as u2', 'students.master_id', '=', 'u2.id')
+                    ->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_time', 'students.class_number', 'students.defence_situation', 'students.complementary', 'u1.name as refree_id', 'u2.name as master_id', 'terms.title')
+                    ->get();
+                return view('ReportStuRefree', compact('students', 'terms'));
+        }
+        public function RefreeReportTermFilter(Term $term){
+
+                $this->validate(request(), [
+                        'term_id' => 'Numeric'
+                ]);
+
+                $term = request('term_id');
+                $terms = Term::all();
+                $id = session()->get('key');
+                $matchThese = ['refree_id' => $id, 'term_id' => $term];
+                $students = Student::where($matchThese)
+                    ->leftjoin('terms', 'students.term_id', '=', 'terms.id')
+                    ->join('users as u1', 'students.refree_id', '=', 'u1.id')
+                    ->join('users as u2', 'students.master_id', '=', 'u2.id')
+                    ->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_time', 'students.class_number', 'students.defence_situation', 'students.complementary', 'u1.name as refree_id', 'u2.name as master_id', 'terms.title')
+                    ->get();
+                return view('ReportStuRefree', compact('students', 'terms', 'term'));
+        }
 }

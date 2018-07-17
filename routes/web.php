@@ -32,6 +32,13 @@ Route::middleware('auth')->post('/UpdateDegree/{degree}', 'DegreeController@Upda
 Route::middleware('auth')->get('/AddMaster','UserController@AddMaster');
 Route::post('/AddMasterProcess', 'UserController@AddMasterProcess')->name('AddMaster');
 Route::middleware('auth')->get('/SeeMaster', 'UserController@SeeMaster');
+
+Route::middleware('auth')->get('/SeeRefree', 'UserController@SeeRefree');
+Route::middleware('auth')->get('/SeeStuRefree/{user}', 'UserController@SeeStuRefree')->name('SeeStuRefree');
+Route::middleware('auth')->post('/SeeStuRefree/{term}', 'UserController@RefreeTermFilter')->name('SeeStuFilter');
+Route::middleware('auth')->get('/ReportStuRefree', 'UserController@ReportStuRefree');
+Route::middleware('auth')->post('/ReportStuRefree/{term}', 'UserController@RefreeReportTermFilter')->name('ReportStuRefree');
+
 Route::middleware('auth')->get('/EditMaster/{user}', 'UserController@EditMaster')->name('EditMaster');
 Route::middleware('auth')->post('/UpdateMaster/{user}', 'UserController@UpdateMaster')->name('UpdateMaster');
 Route::middleware('auth')->post('/DeleteMaster/{user}', 'UserController@DeleteMaster')->name('DeleteMaster');

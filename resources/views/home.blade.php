@@ -33,6 +33,8 @@
 					<br/>
 					<a href="/SeeStu">See Students List</a>
 					<br/>
+					<a href="/SeeRefree">See Refree Report</a>
+					<br/>
 					<a href="/AddMaster">Add Master</a>
 					<br/>
 					<a href="/SeeMaster">See Masters List</a>
