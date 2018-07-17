@@ -96,6 +96,8 @@
 						<th>Student Number</th>
 						<th>Term</th>
 						<th>Deadline</th>
+						<th>Defence Time</th>
+						<th>Class Number</th>
 						<th>Refree</th>
 						<th>Defenced</th>
 						<th>Extended</th>
@@ -113,6 +115,8 @@
 							<td><span>{{ $student->stu_number }}</span></td>
 							<td><span>{{ $student->title }}</span></td>
 							<td><span>{{ $student->deadline }}</span></td>
+							<td><span>{{ $student->defence_time }}</span></td>
+							<td><span>{{ $student->class_number }}</span></td>
 							<td><span>{{ $student->name }}</span></td>
 							@if($student->defence_situation=="on")
 							<td><img src="{{ url('/tik.png') }}" 	style="margin-left: 20px;width: 30px; height: 30px;"/></td>

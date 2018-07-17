@@ -67,7 +67,9 @@
 						<th>عنوان پروژه</th>
 						<th>شماره دانشجویی</th>
 						<th>ترم</th>
+						<th>تاریخ تحویل</th>
 						<th>زمان تحویل</th>
+						<th>شماره کلاس</th>
 						<th>نام استاد</th>
 						<th>نام داور</th>
 						<th>دفاع شده</th>
@@ -84,6 +86,8 @@
 							<td><span>{{ $student->stu_number }}</span></td>
 							<td><span>{{ $student->title }}</span></td>
 							<td><span>{{ $student->deadline }}</span></td>
+							<td><span>{{ $student->defence_time }}</span></td>
+							<td><span>{{ $student->class_number }}</span></td>
 							<td><span>{{ $student->master_id }}</span></td>
 							<td><span>{{ $student->refree_id }}</span></td>
 							@if($student->defence_situation=="on")

@@ -98,6 +98,22 @@
                         </div>
 
 						<div class="form-group">
+                            <label for="defence_time" class="col-md-4 control-label">Defence Time</label>
+
+                            <div class="col-md-6">
+                                <input id="defence_time" type="text" class="form-control" name="defence_time" value="{{ $student[0]->defence_time }}">
+                            </div>
+                        </div>
+
+						<div class="form-group">
+                            <label for="class_number" class="col-md-4 control-label">Class Number</label>
+
+                            <div class="col-md-6">
+                                <input id="class_number" type="text" class="form-control" name="class_number" value="{{ $student[0]->class_number }}">
+                            </div>
+                        </div>
+
+						<div class="form-group">
 
 							<label for="term_id" class="col-md-4 control-label">Term</label>
 

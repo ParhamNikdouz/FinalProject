@@ -29,7 +29,7 @@ class StudentController extends Controller
 		$students = Student::where('master_id', '=', $id)
 			->leftjoin('terms', 'students.term_id', '=', 'terms.id')
 			->leftjoin('users', 'students.refree_id', '=', 'users.id')
-			->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')			     ->get();
+			->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_time', 'students.class_number', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')			     ->get();
 		return view('SeeStu', compact('students', 'terms'));
 	}
 
@@ -39,7 +39,7 @@ class StudentController extends Controller
 		$students = Student::where('master_id', '=', $id)
 			->leftjoin('terms', 'students.term_id', '=', 'terms.id')
 			->leftjoin('users', 'students.refree_id', '=', 'users.id')
-			->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')			     ->get();
+			->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_time', 'students.class_number', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')			     ->get();
 		return view('ReportStu', compact('students', 'terms'));
 	}
 
@@ -57,7 +57,7 @@ class StudentController extends Controller
 		$students = Student::where($matchThese)
 			->leftjoin('terms', 'students.term_id', '=', 'terms.id')
 			->leftjoin('users', 'students.refree_id', '=', 'users.id')
-			->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')
+			->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_time', 'students.class_number', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')
 			->get();
 		return view('SeeStu', compact('students', 'terms', 'term'));
 	}
@@ -75,7 +75,7 @@ class StudentController extends Controller
                 $students = Student::where($matchThese)
                         ->leftjoin('terms', 'students.term_id', '=', 'terms.id')
                         ->leftjoin('users', 'students.refree_id', '=', 'users.id')
-                        ->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')                             ->get();
+                        ->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_time', 'students.class_number', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')                             ->get();
                 return view('ReportStu', compact('students', 'terms', 'term'));
         }
 
@@ -87,10 +87,12 @@ class StudentController extends Controller
 			'email' => 'Required|String|max:255',
 			'password' => 'Required|Numeric',
 			'deadline' => 'String',
+            'defence_time' => 'String',
+            'class_number' => 'String',
 			'term_id' => 'Required|Numeric',
 			'refree_id' => 'Numeric',
 			'defence' => 'String',
-			'complementary' => 'String'
+			'complementary' => 'String',
 		], [
 			'email.required' => 'The title project field is required.',
 			'password.required' => 'The student number field is required.',
@@ -127,11 +129,13 @@ class StudentController extends Controller
 		}
 		if($countStu[0] < $maxStu[0]){
 			Student::create([
-	    			'full_name' => request('name'),
-        		        'title_project' => request('email'),
+	    		'full_name' => request('name'),
+        		'title_project' => request('email'),
 				'stu_number' => request('password'),
 				'master_id' => Auth::user()->id,
 				'deadline' => request('deadline'),
+                'defence_time' => request('defence_time'),
+                'class_number' => request('class_number'),
 				'term_id' => request('term_id'),
 				'refree_id' => request('refree_id'),
 				'defence_situation' => request('defence'),
@@ -153,7 +157,7 @@ class StudentController extends Controller
 		$student = Student::where('students.id', '=', $student->id)
 			->leftjoin('terms', 'students.term_id', '=', 'terms.id')
 			->leftjoin('users', 'students.refree_id', '=', 'users.id')
-			->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')			     ->get();
+			->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_time', 'students.class_number', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')			     ->get();
 		return view('EditStu', compact('student', 'terms', 'refrees', 'gp_manager'));
 	}
 
@@ -163,6 +167,8 @@ class StudentController extends Controller
 			'email' => 'Required|String|max:255',
 			'password' => 'Required|Numeric',
 			'deadline' => 'String',
+            'defence_time' => 'String',
+            'class_number' => 'String',
 			'term_id' => 'Numeric',
 			'refree_id' => 'Numeric',
 			'defence' => 'String',
@@ -173,11 +179,13 @@ class StudentController extends Controller
 			'password.numeric' => 'The student number must be a number.'
 		]);
 		Student::where('id', $student->id)->update([
-	    		'full_name' => request('name'),
-        	        'title_project' => request('email'),
+	    	'full_name' => request('name'),
+        	'title_project' => request('email'),
 			'stu_number' => request('password'),
-			//'master_id' => Auth::user()->id,
+// 			'master_id' => Auth::user()->id,
 			'deadline' => request('deadline'),
+            'defence_time' => request('defence_time'),
+            'class_number' => request('class_number'),
 			'term_id' => request('term_id'),
 			'refree_id' => request('refree_id'),
 			'defence_situation' => request('defence'),

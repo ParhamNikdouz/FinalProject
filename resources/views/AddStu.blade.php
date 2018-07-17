@@ -102,11 +102,27 @@
                             </div>
                         </div>
 
-						<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+						<div class="form-group{{ $errors->has('deadline') ? ' has-error' : '' }}">
                             <label for="deadline" class="col-md-4 control-label">Deadline</label>
 
                             <div class="col-md-6">
                                 <input id="deadline" type="text" class="form-control" name="deadline" placeholder="11/03/1397">
+                            </div>
+                        </div>
+
+						<div class="form-group{{ $errors->has('defence_time') ? ' has-error' : '' }}">
+                            <label for="defence_time" class="col-md-4 control-label">Defence Time</label>
+
+                            <div class="col-md-6">
+                                <input id="defence_time" type="text" class="form-control" name="defence_time" placeholder="11:30">
+                            </div>
+                        </div>
+
+						<div class="form-group{{ $errors->has('class_number') ? ' has-error' : '' }}">
+                            <label for="class_number" class="col-md-4 control-label">Class Number</label>
+
+                            <div class="col-md-6">
+                                <input id="class_number" type="text" class="form-control" name="class_number" placeholder="218">
                             </div>
                         </div>
 
