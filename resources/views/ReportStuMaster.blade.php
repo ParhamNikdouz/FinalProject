@@ -84,8 +84,8 @@
 							<td><span>{{ $student->stu_number }}</span></td>
 							<td><span>{{ $student->title }}</span></td>
 							<td><span>{{ $student->deadline }}</span></td>
-							<td><span>{{ Auth::user()->name }}</span></td>
-							<td><span>{{ $student->name }}</span></td>
+							<td><span>{{ $student->master_id }}</span></td>
+							<td><span>{{ $student->refree_id }}</span></td>
 							@if($student->defence_situation=="on")
 							<td><img src="{{ url('/tik.png') }}" 	style="margin-left: 20px;width: 30px; height: 30px;"/></td>
 							@else

@@ -31,7 +31,8 @@ class UserController extends Controller
 		$students = Student::where('master_id', '=', $user->id)
 			->leftjoin('terms', 'students.term_id', '=', 'terms.id')
 			->leftjoin('users', 'students.refree_id', '=', 'users.id')
-			->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')                             ->get();
+			->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')
+			->get();
                 return view('SeeStuMaster', compact('students', 'terms'));
 	}
 
@@ -39,9 +40,11 @@ class UserController extends Controller
                 $terms = Term::all();
                 $id = session()->get('key');
                 $students = Student::where('master_id', '=', $id)
-                        ->leftjoin('terms', 'students.term_id', '=', 'terms.id')
-                        ->leftjoin('users', 'students.refree_id', '=', 'users.id')
-                        ->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')                             ->get();
+                    ->leftjoin('terms', 'students.term_id', '=', 'terms.id')
+                    ->join('users as u1', 'students.refree_id', '=', 'u1.id')
+                    ->join('users as u2', 'students.master_id', '=', 'u2.id')
+                    ->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_situation', 'students.complementary', 'u1.name as refree_id', 'u2.name as master_id', 'terms.title')
+                    ->get();
                 return view('ReportStuMaster', compact('students', 'terms'));
         }
 
@@ -61,7 +64,8 @@ class UserController extends Controller
 		$students = Student::where($matchThese)
 			->leftjoin('terms', 'students.term_id', '=', 'terms.id')
 			->leftjoin('users', 'students.refree_id', '=', 'users.id')
-			->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')			     ->get();
+			->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')
+			->get();
 		return view('SeeStuMaster', compact('students', 'terms', 'term'));
 	}
 
@@ -76,9 +80,11 @@ class UserController extends Controller
                 $id = session()->get('key');
                 $matchThese = ['master_id' => $id, 'term_id' => $term];
                 $students = Student::where($matchThese)
-                        ->leftjoin('terms', 'students.term_id', '=', 'terms.id')
-                        ->leftjoin('users', 'students.refree_id', '=', 'users.id')
-                        ->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_situation', 'students.complementary', 'users.name', 'terms.title')                             ->get();
+                    ->leftjoin('terms', 'students.term_id', '=', 'terms.id')
+                    ->join('users as u1', 'students.refree_id', '=', 'u1.id')
+                    ->join('users as u2', 'students.master_id', '=', 'u2.id')
+                    ->select('students.id', 'students.full_name', 'students.title_project', 'students.stu_number', 'students.deadline', 'students.defence_situation', 'students.complementary', 'u1.name as refree_id', 'u2.name as master_id', 'terms.title')
+                    ->get();
                 return view('ReportStuMaster', compact('students', 'terms', 'term'));
         }
 
